@@ -22,9 +22,12 @@
     }
     function floorHeater() {
         var action_url = "http://192.168.2.38/getinfo";
-        $.ajax({url: action_url, success: function(result){
-                //$('#').toggleClass('swon');
-                alert(result);
+        $.ajax({
+                url: action_url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result){
+                document.getElementById('bathTemperatura').innerHTML = result.current_temperature;               
             }});
     }        
 </script>
