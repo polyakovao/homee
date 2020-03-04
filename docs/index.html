@@ -26,8 +26,8 @@
                 url: action_url,
                 type: 'GET',
                 dataType: 'json',
-                success: function(result){
-                document.getElementById('bathTemperatura').innerHTML = result.current_temperature;               
+                success: function(data){
+                document.getElementById('bathTemperatura').innerHTML = data.current_temperature;               
             }});
     }        
 </script>
