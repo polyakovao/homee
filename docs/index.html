@@ -23,6 +23,7 @@
         
     function setTemp(temp) {
         var action_url = "http://192.168.2.38/settemp?hysteresis=1&temp="+temp;
+            document.getElementById("setTemp").style.display = "none";
         $.ajax({
                 url: action_url,
                 type: 'GET',
