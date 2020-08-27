@@ -47,6 +47,21 @@
 function heaterControl() {
   alert('not done yet');      
 }
+function rolControl(place) {
+  //alert('not done yet');  
+  if (place == 'r') {
+    var action_url = "http://192.168.0.174/down1";
+    $.ajax({url: action_url, success: function(result){
+      //$('#').toggleClass('swon');
+            alert('done1');  
+    }});
+    action_url = "http://192.168.0.174/down2";
+    $.ajax({url: action_url, success: function(result){
+      //$('#').toggleClass('swon');
+            alert('done1');
+    }});
+  }
+}
 </script>
 <div style="position: absolute; width: 100%; top: 50%; transform: translate(0, -50%); margin: 0;" class="">
     <!--<img src="home.png" width="100%" alt="Логотип сайта">-->
@@ -89,11 +104,19 @@ function heaterControl() {
                         <p onclick="setTemp(34);">34</p>
                 </div>            
     </div>
+        <!--
     <div style="position: inherit;left: 25%;top: 38%;">
         <img src="heating_menu.png" style="width: 75px; height: 75px;" onclick="heaterControl('k');">
     </div>
     <div style="position: inherit;left: 43%;top: 20%;">
         <img src="heating_menu.png" style="width: 75px; height: 75px;" onclick="heaterControl('r');">
+    </div>
+-->
+    <div style="position: inherit;left: 25%;top: 38%;">
+        <img src="rol.png" style="width: 75px; height: 75px;" onclick="rolControl('k');">
+    </div>
+    <div style="position: inherit;left: 43%;top: 20%;">
+        <img src="rol.png" style="width: 75px; height: 75px;" onclick="rolControl('r');">
     </div>
 </div>
 </body>
