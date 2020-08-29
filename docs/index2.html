@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jquery.min.js"></script>
+  <script>
+    function ligter(location) {
+        var action_url = "http://192.168.0.188/"+location;
+        //alert(url);
+        $.ajax({url: action_url, success: function(result){
+                //$('#').toggleClass('swon');
+            }});
+    }
+    $(document).ready(function(){
+    var firstx = 0;
+    var firsty = 0;
+      $(".bdiv").click(function(e){
+        var hrf = "http://192.168.2.67/led"; //+ e.target.id;
+        if(  e.offsetX < 20 || e.offsetY < 20 
+        || e.offsetX > $('#'+e.target.id).get(0).offsetWidth - 20
+        || e.offsetY > $('#'+e.target.id).get(0).offsetHeight - 20
+        ){
+          var mode = $("[name=mode]:checked").val();
+          var url = "?color=255&r=255&g=255&b=255&brightness=2&leds=115&place=";
+          if (mode=='max') {
+            url = "?color=255&r=255&g=255&b=255&brightness=240&leds=500&place=";
+          } else if (mode=='bath') {
+            url = "?color=255&r=255&g=2&b=255&brightness=640&leds=255&place=";
+          } else if (mode=='alloff') {
+            url = "?color=255&r=255&g=255&b=255&brightness=0&leds=5&place=";
+          }
+          $.ajax({url: hrf+url+e.target.id, 
+          success: function(result){
+            //alert("ok");
+            $('#'+e.target.id).toggleClass('ston');
+          }});
+          //$('#'+e.target.id).toggleClass('ston');
+          //alert(e.offsetX - firsty);
+          //alert(parseRectangle(firstx, e.offsetX, firstY, e.offsetY));
+          //firstx = e.offset X;
+          //firsty = e.offsetY; 
+          //alert('clicked on the border!'+(e.target.id));
+        } else {
+          $.ajax({url: "http://192.168.0.188/"+e.target.id, success: function(result){
+            //alert(result);
+            
+            $('#'+e.target.id).toggleClass('swon');
+            //alert(e.target.id);
+          }});
+        }
+      });
+      
+      function parseRectangle(fx, fy, sx, sy) {
+        return fx+fy;
+      }
+    });
+  </script>
+  <style>
+    .swon {background-color: yellow;}
+    .ston {border: 5px groove deepskyblue !important;}
+    .bdiv {float:left; border: 5px groove; width:44%;}
+    div.kb{height:15%;}
+    div.rb{height:15%;}
+    div.k {float:left; border: 5px groove; height:59%; width:44%;}
+    div.r {float:left; border: 5px groove; height:59%; width:44%;}
+    div.h {float:left; border: 5px groove; height:20%; width:50%; margin-left: 10%}
+    div.b {float:left; border: 5px groove; height:20%; width:28%;}
+    
+    div.action_selector {display:flex;}
+body,
+html {
+  height: 100%;  
+  background-color: #00dcff0f;
+  width: 100%;
+  margin: 0px;
+  position:fixed;
+}
+.centre {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+  </style>
+</head>
+<body>
+<div style="height:10%">
+  off
+  <input type="radio" name="mode" value="alloff" />
+  nroom
+  <input type="radio" name="mode" value="nightroom" />
+  bath
+  <input type="radio" name="mode" value="bath" />
+  max
+  <input type="radio" name="mode" value="max" checked/>
+</div>
+<div style="height:90%">
+  <div id="kb" class="bdiv kb">kb</div>
+  <div id="rb" class="bdiv rb">rb</div>
+  <div id="k" class="k bdiv"><!--
+    <div style="padding: 10px; position:relative; margin: 0 auto; width: 90px; heigh: auto; background-color: yellow; ">
+     --> k
+    <!--</div>-->
+  </div>
+  <div id="r" class="r bdiv">
+    <div class="centre">
+      <img src="lamp.png" alt="lamp" style="width:50px;height:50px; margin: -25px -25px" onclick="ligter('r');">
+    </div>
+  </div>
+  <div id="h" class="h bdiv">h</div>
+  <div id="b" class="b bdiv">
+    <div class="action_selector" onclick="alert(1)">b</div>
+  </div>
+</div>
+</body>
+</html>
