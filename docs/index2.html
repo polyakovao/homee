@@ -4,6 +4,12 @@
   <!--<script src="jquery.min.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
+    function settings(location) {
+        var action_url = "http://192.168.0.188/allOff";
+        $.ajax({url: action_url, success: function(result){
+                //$('#').toggleClass('swon');
+            }});
+    }
     function ligter(location) {
         var action_url = "http://192.168.0.188/"+location;
         //alert(url);
@@ -15,19 +21,19 @@
     var firstx = 0;
     var firsty = 0;
       $(".bdiv").click(function(e){
-        var hrf = "http://192.168.2.67/led"; //+ e.target.id;
+        var hrf = "http://192.168.0.179/led"; //+ e.target.id;
         if(  e.offsetX < 20 || e.offsetY < 20 
         || e.offsetX > $('#'+e.target.id).get(0).offsetWidth - 20
         || e.offsetY > $('#'+e.target.id).get(0).offsetHeight - 20
         ){
           var mode = $("[name=mode]:checked").val();
-          var url = "?color=255&r=255&g=255&b=255&brightness=2&leds=115&place=";
+          var url = "?fill=0color=255&r=255&g=255&b=255&brightness=2&leds=115&place=";
           if (mode=='max') {
-            url = "?color=255&r=255&g=255&b=255&brightness=240&leds=500&place=";
+            url = "?fill=0&color=255&r=255&g=255&b=255&brightness=240&leds=500&place=";
           } else if (mode=='bath') {
-            url = "?color=255&r=255&g=2&b=255&brightness=640&leds=255&place=";
+            url = "?fill=0color=255&r=255&g=2&b=255&brightness=640&leds=255&place=";
           } else if (mode=='alloff') {
-            url = "?color=255&r=255&g=255&b=255&brightness=0&leds=5&place=";
+            url = "?fill=0color=255&r=255&g=255&b=255&brightness=0&leds=5&place=";
           }
           $.ajax({url: hrf+url+e.target.id, 
           success: function(result){
@@ -58,12 +64,13 @@
   <style>
     .swon {background-color: yellow;}
     .ston {border: 5px groove deepskyblue !important;}
-    .bdiv {float:left; border: 5px groove; width:44%;}
+    .bdiv {float:left; border: 5px groove; width:48%;}
     div.kb{height:15%;}
     div.rb{height:15%;}
-    div.k {float:left; border: 5px groove; height:59%; width:44%;}
-    div.r {float:left; border: 5px groove; height:59%; width:44%;}
-    div.h {float:left; border: 5px groove; height:20%; width:50%; margin-left: 10%}
+    div.k {float:left; border: 5px groove; height:59%; width:48%;}
+    div.r {float:left; border: 5px groove; height:59%; width:48%;}
+    div.d {float:left; border: 5px groove; height:14%; width:5%; margin-top: 2%; line-height: 70px;}
+    div.h {float:left; border: 5px groove; height:20%; width:50%; margin-left: 5%}
     div.b {float:left; border: 5px groove; height:20%; width:28%;}
     
     div.action_selector {display:flex;}
@@ -108,6 +115,7 @@ html {
       <img src="lamp.png" alt="lamp" style="width:50px;height:50px; margin: -25px -25px" onclick="ligter('r');">
     </div>
   </div>
+  <div id="d" class="d" onclick="settings()">All off</div>
   <div id="h" class="h bdiv">h</div>
   <div id="b" class="b bdiv">
     <div class="action_selector" onclick="alert(1)">b</div>
