@@ -8,13 +8,13 @@
       //alert('not done yet');  
       if (place == 'r') {
         if (rol == 2) {
-          var action_url = "http://192.168.0.174/down1";
+          var action_url = "http://192.168.0.174/down2";
           $.ajax({url: action_url, success: function(result){
                   alert('done1');  
           }});
         }
         if (rol == 3) {        
-          action_url = "http://192.168.0.174/down2";
+          action_url = "http://192.168.0.174/down1";
           $.ajax({url: action_url, success: function(result){
                   alert('done2');
           }});
