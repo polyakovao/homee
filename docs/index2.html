@@ -51,6 +51,8 @@
             url = "?fill=0color=255&r=255&g=2&b=255&brightness=640&leds=255&place=";
           } else if (mode=='alloff') {
             url = "?fill=0color=255&r=255&g=255&b=255&brightness=0&leds=5&place=";
+          } else if (mode=='halfLight') {
+            url = "?fill=0color=255&r=255&g=255&b=255&brightness=120&leds=160&place=";
           }
           $.ajax({url: hrf+url+e.target.id, 
           success: function(result){
@@ -109,15 +111,17 @@ html {
   </style>
 </head>
 <body>
-<div style="height:10%">
-  off
+<div style="height:10%">  
   <input type="radio" name="mode" value="alloff" />
-  nroom
+  off
   <input type="radio" name="mode" value="nightroom" />
-  bath
+  nroom
   <input type="radio" name="mode" value="bath" />
+  bath  
+  <input type="radio" name="mode" value="max"/>
   max
-  <input type="radio" name="mode" value="max" checked/>
+  <input type="radio" name="mode" value="halfLight" checked/>
+  half
   <img src="rol.png" style="width: 75px; height: 75px; position: absolute; right: 35%; margin-top: 30px;" onclick="rolControl('r',2);">
   <img src="rol.png" style="width: 75px; height: 75px; position: absolute; right: 25%; margin-top: 30px;" onclick="rolControl('r',3);">
 </div>
