@@ -55,12 +55,18 @@
                         url = "?fill=0color=255&r=255&g=255&b=255&brightness=120&leds=175&place=";
                     } else if (mode=='halfRed') {
                         url = "?fill=0color=255&r=0&g=255&b=0&brightness=120&leds=450&place=";
+                    } else if (mode=='manual') {
+                        ledModalWindow(e.target.id);
                     }
-                    $.ajax({url: hrf+url+e.target.id,
-                        success: function(result){
-                            //alert("ok");
-                            $('#'+e.target.id).toggleClass('ston');
-                        }});
+                    if (mode != 'manual') {
+                        $.ajax({
+                            url: hrf + url + e.target.id,
+                            success: function (result) {
+                                //alert("ok");
+                                $('#' + e.target.id).toggleClass('ston');
+                            }
+                        });
+                    }
                     //$('#'+e.target.id).toggleClass('ston');
                     //alert(e.offsetX - firsty);
                     //alert(parseRectangle(firstx, e.offsetX, firstY, e.offsetY));
@@ -119,6 +125,48 @@
             }
         </style>
     <![endif]-->
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div style="height:15%">
@@ -133,10 +181,12 @@
     bath
     <input type="radio" name="mode" value="max" style="zoom: 1.8" />
     max
-    <input type="radio" name="mode" value="halfLight"  style="zoom: 1.8" checked/>
+    <input type="radio" name="mode" value="halfLight"  style="zoom: 1.8" />
     half
-    <input type="radio" name="mode" value="halfRed"  style="zoom: 1.8" checked/>
+    <input type="radio" name="mode" value="halfRed"  style="zoom: 1.8" />
     halfRed
+    <input type="radio" name="mode" value="manual"  style="zoom: 1.8" checked/>
+    manual
     <img src="rol.png" style="width: 75px; height: 75px; position: absolute; right: 35%; margin-top: 30px;" onclick="rolControl('r',2);">
     <img src="rol.png" style="width: 75px; height: 75px; position: absolute; right: 25%; margin-top: 30px;" onclick="rolControl('r',3);">
 </div>
@@ -158,6 +208,60 @@
     <div id="b" class="b bdiv">
         <div class="action_selector" onclick="alert(1)">b</div>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <input type="hidden" id="curPos">
+            <input type="color" id="color_pick" name="head" value="#e66465" style="zoom: 3;">
+            <button onclick="changeLedColor()" style="zoom: 3.8; float: right; margin-right: 10px;">Change</button>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function ledModalWindow(id) {
+        $('#myModal').css("display","block");
+        $('#curPos').val(id);
+    };
+
+    function changeLedColor(r,g,b){
+        var toread = document.getElementById('color_pick');
+        var r = parseInt("0x"+toread.value.slice(1,3));
+        var g = parseInt("0x"+toread.value.slice(3,5));
+        var b = parseInt("0x"+toread.value.slice(5,7));
+        var hrf = "http://192.168.0.179/led"; //+ e.target.id;
+        var mode = $('#curPos').val();
+        //var url = "?fill=0color=255&r="+r+"&g="+g+"&b="+b+"&brightness=120&leds=175&place=";
+        var url = "?fill=0color=255&r="+g+"&g="+r+"&b="+b+"&brightness=120&leds=175&place=";
+        $.ajax({url: hrf+url+mode,
+            success: function(result){
+                //alert("ok");
+                $('#'+mode).toggleClass('ston');
+            }});
+        $('#myModal').css("display","none");
+    };
+</script>
